@@ -4,15 +4,15 @@
         <form class="form">
             <div class="input-form-container">
                 <label for="selectCity">Destino</label>
-                <select name="selectCity" id="city" v-model="city">
-                    <option value="">Select Option</option>
-                    <option>Segunda opção</option>
+                <select name="selectCity" id="city" v-model="city_in_data">
+                   <option selected="selected">Selecione o Destino</option>
+                   <option v-for="city_in_data in citys" :key="city_in_data.id" :value="city_in_data.city">{{city_in_data}}</option>
                 </select>
             </div>
            
             <div class="input-form-container">
                 <label for="weigth">Peso</label>
-                <input type="text" id="weight" name="weigth" value="weigth" v-model="weight">
+                <input type="text" id="weight" name="weigth" value="weigth" v-model="weight" placeholder="Peso da Carga em Kg">
             </div>
            
             <div class="btn-container">
@@ -28,9 +28,22 @@
 
         data () {
         return {
-            city: "Curitiba",
-            weight: 0.0
+            citys: null,
+            weight: null
         }
+    }, 
+    methods:{
+        async getCitys(){
+            const req = await fetch("http://localhost:3000/transport")
+            const data = await req.json();
+
+            let city = data.map(a => a.city)
+            let diffCity = new Set(city)
+
+            this.citys = Array.from(diffCity).sort()
+        }
+    }, mounted(){
+        this.getCitys()
     }
     }
    
@@ -80,6 +93,7 @@
     label{
         font-size: small;
         font-weight: bold;
+        color: #222;
     }
     input, select{
         padding: 10px;
