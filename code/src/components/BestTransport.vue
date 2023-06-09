@@ -28,7 +28,8 @@ export default {
     }
   },
   created() {
-      // Implemente aqui o Rest
+    // Implemente aqui o GET dos dados da API REST
+    // para que isso ocorra na inicialização da pagina
     this.appName = 'Melhor Frete'
   },
   methods: {
