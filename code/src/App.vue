@@ -3,9 +3,11 @@
     <BestTransport/>
     <div class="container-body-page">
       <FormTransportPage/>
-      <ItemCard message="Frete com menor valor" tranpostName="Sedex" leadTime="2" price="2.5"/>
+      <ItemCard/>
     </div>
-   
+    <div class="btn-clear">
+      <input type="button" onclick="" value="Limpar">
+    </div>
   </div>
 </template>
 
@@ -20,7 +22,7 @@ export default {
     BestTransport,
     FormTransportPage,
     ItemCard
-  }
+  }, 
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="container-card">
+    <div class="container-card" :v-model="modelValue">
         <div class="top-message">
             <p>Estas são as melhores alternativas de frete que encontramos para você</p>
         </div>
@@ -20,6 +20,7 @@
             </section>
         </div>
     </div>
+   
 </template>
 
 <script>
@@ -27,11 +28,24 @@
         name: "ItemCard",
 
         props: {
-            message: String,
-            tranpostName: String,
-            leadTime: String,
-            price: String
-        }, 
+            message:{
+                type: String,
+                required: true
+            }, 
+            tranpostName:{
+                type: String,
+                required: true
+            },
+            leadTime:{
+                type: String,
+                required: true
+            },
+            price:{
+                type: String,
+                required: true
+            }
+           
+        },
     }
 </script>
 
@@ -39,7 +53,7 @@
     .container-informations{
         width: 100%;
         padding: 5px;
-        display: flex;
+        display: none;
         justify-content: space-between;
     }
     .data-transport{
@@ -63,6 +77,7 @@
         margin-left: 10px;
     }
     .top-message{
+        display: none;
         text-align: left;
         width: 80%;
         color: #6C757D;
