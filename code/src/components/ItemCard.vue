@@ -53,7 +53,7 @@
     .container-informations{
         width: 100%;
         padding: 5px;
-        display: none;
+        display: flex;
         justify-content: space-between;
     }
     .data-transport{
@@ -77,7 +77,7 @@
         margin-left: 10px;
     }
     .top-message{
-        display: none;
+        display: flex;
         text-align: left;
         width: 80%;
         color: #6C757D;
