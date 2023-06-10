@@ -1,14 +1,18 @@
 <template>
    <div class="containerForm">
         <h1 class="title">Insira o destino e o peso</h1>
-        <form class="form">
+        <form class="form" @submit="getInfomation">
             <div class="input-form-container">
                 <label for="selectCity">Destino</label>
-                <select name="selectCity" id="city" v-model="city_in_data">
+                <select name="selectCity" id="city" v-model="city">
                    <option selected="selected">Selecione o Destino</option>
-                   <option v-for="city_in_data in citys" :key="city_in_data.id" :value="city_in_data.city">{{city_in_data}}</option>
+                     <option 
+                        v-for="city in citys" :key="city.id" v-bind:value="city">
+                        {{city}}
+                    </option>
                 </select>
             </div>
+           
            
             <div class="input-form-container">
                 <label for="weigth">Peso</label>
@@ -23,13 +27,15 @@
 </template>
 
 <script>
+
     export default {
         name: "FormTransportPage",
 
         data () {
         return {
             citys: null,
-            weight: null
+            weight: null,
+            city: ''
         }
     }, 
     methods:{
@@ -41,6 +47,17 @@
             let diffCity = new Set(city)
 
             this.citys = Array.from(diffCity).sort()
+        },
+
+        async getInfomation(e){
+            e.preventDefault()
+
+            const data = {
+                weight: parseInt(this.weight),
+                city: this.city
+            }
+
+            console.log(data)
         }
     }, mounted(){
         this.getCitys()
