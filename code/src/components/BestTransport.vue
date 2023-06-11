@@ -10,6 +10,7 @@
 </template>
 
 <script>
+
 import {
   BNavbar,
   BNavbarBrand,
