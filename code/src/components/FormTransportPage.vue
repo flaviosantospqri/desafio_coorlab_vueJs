@@ -64,20 +64,18 @@ export default {
         weight: parseInt(this.weight),
         city: this.city,
       };
-      console.log(dataUser);
       this.selectedCity(dataUser);
     },
 
     selectedCity(dataUser) {
       this.listCities = this.datas.filter((a) => a.city == dataUser.city);
       this.findLowPrice();
+      this.findFastDelivered();
     },
 
     findLowPrice() {
       if (this.weight > 100) {
         this.lowPrice = this.listCities.reduce((a, b) => {
-          console.log(a.cost_transport_heavy);
-
           return parseFloat(a.cost_transport_heavy?.replace(/[^0-9-.]/g, "")) <
             parseFloat(b.cost_transport_heavy?.replace(/[^0-9-.]/g, ""))
             ? a
@@ -91,11 +89,20 @@ export default {
             : b;
         }, 0);
       }
-      console.log(this.listCities);
-      console.log(this.lowPrice);
       return this.lowPrice;
     },
+
+    findFastDelivered() {
+      this.fastDelivered = this.listCities.reduce((a, b) => {
+        return parseInt(a.lead_time?.replace(/^[0-9]/g, "")) <
+          parseInt(b.lead_time?.replace(/^[0-9]/g, ""))
+          ? a
+          : b;
+      }, 0);
+      return this.fastDelivered;
+    },
   },
+
   created() {
     this.getCitys();
   },
