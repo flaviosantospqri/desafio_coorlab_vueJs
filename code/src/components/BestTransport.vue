@@ -6,14 +6,10 @@
       </b-navbar-brand>
     </b-navbar>
   </div>
-
 </template>
 
 <script>
-import {
-  BNavbar,
-  BNavbarBrand,
-} from 'bootstrap-vue'
+import { BNavbar, BNavbarBrand } from "bootstrap-vue";
 
 export default {
   components: {
@@ -21,24 +17,21 @@ export default {
     BNavbarBrand,
   },
   data() {
-    const appName = ''
+    const appName = "";
 
     return {
       appName,
-    }
+    };
   },
   created() {
-    // Implemente aqui o GET dos dados da API REST
-    // para que isso ocorra na inicialização da pagina
-    this.appName = 'Melhor Frete'
+    this.appName = "Melhor Frete";
   },
   methods: {
-    // Implemente aqui os metodos utilizados na pagina
     methodFoo() {
-      console.log(this.appName)
+      console.log(this.appName);
     },
   },
-}
+};
 </script>
 
 <style scoped>
