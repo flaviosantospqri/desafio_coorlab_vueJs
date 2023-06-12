@@ -1,15 +1,11 @@
 <template>
-  <div class="container-card" :v-model="modelValue">
-    <div class="top-message">
-      <p>
-        Estas são as melhores alternativas de frete que encontramos para você
-      </p>
-    </div>
+  <div class="container-card">
+    <h4>{{ message }}</h4>
     <div class="container-informations">
+      
       <section class="data-transport">
-        <h4>{{ message }}</h4>
         <div class="figure">
-          <span>vai entrar uma imagem</span>
+          <img :src="image" alt="" srcset="" />
         </div>
         <p>
           Transportadora: <span>{{ tranpostName }}</span>
@@ -29,24 +25,23 @@
 
 <script>
 export default {
-  name: "ItemCard",
+  name: "ItemCardRender",
 
   props: {
     message: {
       type: String,
-      required: true,
     },
     tranpostName: {
       type: String,
-      required: true,
     },
     leadTime: {
       type: String,
-      required: true,
     },
     price: {
       type: String,
-      required: true,
+    },
+    image: {
+      type: String,
     },
   },
 };
@@ -55,16 +50,24 @@ export default {
 <style>
 .container-informations {
   width: 100%;
-  min-width: 400px;
+  box-sizing: border-box;
+  max-width: 500px;
+  max-height: 100px;
+  min-width: 350px;
   padding: 5px;
   display: flex;
   justify-content: space-between;
 }
+.figure{
+  padding: 20px;
+  background-color: #00aca6;
+  border-radius: 4px;
+  margin-right: 5px;
+}
 .data-transport {
-  padding: 10px;
   border-radius: 4px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-content: center;
   justify-content: center;
   flex: 1;
@@ -72,12 +75,12 @@ export default {
 }
 .data-value {
   display: flex;
+  max-width: 100px;
   border-radius: 4px;
   align-items: center;
   justify-content: center;
   background-color: #cccccc;
   padding: 10px;
-  width: 30%;
   margin-left: 10px;
 }
 .top-message {
@@ -111,5 +114,8 @@ export default {
   border-radius: 4px;
   font-weight: 600;
   cursor: pointer;
+}
+p{
+  padding: 5px;
 }
 </style>

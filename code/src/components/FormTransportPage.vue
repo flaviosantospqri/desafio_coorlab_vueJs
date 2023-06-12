@@ -1,14 +1,20 @@
 <template>
   <div class="container">
-    <div class="containerForm">
-      <h1 class="title">Insira o destino e o peso</h1>
+    <div class="container-form">
+      <h1 class="title">
+        <span class="imagem-map-tranport"
+          ><img
+            src="../assets/map-with-clock.svg"
+            alt="Imagemm de um mapa com relógio representando transporte" /></span
+        >Insira o destino e o peso
+      </h1>
       <form class="form" @submit="getInfomation">
         <div class="input-form-container">
           <label for="selectCity">Destino</label>
           <select name="selectCity" id="city" v-model="city">
-            <option selected="selected">Selecione o Destino</option>
-            <option v-for="city in citys" :key="city.id" v-bind:value="city">
-              {{ city }}
+            <option>Selecione o Destino</option>
+            <option v-for="name in citysNames" :key="name.id" :value="name">
+              {{ name }}
             </option>
           </select>
         </div>
@@ -30,10 +36,13 @@
         </div>
       </form>
     </div>
-    <div class="container-component">
+    <div v-if="show" class="container-component">
+      <p>
+        Estas são as melhores alternativas de frete que encontramos para você.
+      </p>
       <div>
         <ItemCard
-          v-if="show"
+          :image="imageLowCostTransport"
           :message="msgPrice"
           :leadTime="lowPrice.lead_time"
           :price="valueDelivery"
@@ -42,29 +51,30 @@
       </div>
       <div>
         <ItemCard
-          v-if="show"
+          :image="imageFastTransport"
           :message="msgFast"
           :leadTime="fastDelivered.lead_time"
-          :price="valueDelivery"
+          :price="fastDeliveredPrice"
           :tranpostName="fastDelivered.name"
         ></ItemCard>
       </div>
     </div>
     <div class="btn-clear">
-        <input
-          type="button"
-          @click="clear(e)"
-          class="submit-req-btn"
-          value="Limpar"
-        />
-      </div>
+      <input
+        v-if="show"
+        type="button"
+        @click="clear(e)"
+        class="submit-req-btn-clear"
+        value="Limpar"
+      />
+    </div>
   </div>
 </template>
 
 
 
 <script>
-import ItemCard from "./ItemCardLowPrice.vue";
+import ItemCard from "./ItemCard.vue";
 
 export default {
   name: "FormTransportPage",
@@ -73,14 +83,17 @@ export default {
   },
   data() {
     return {
-      msgPrice: "O mais barato",
-      msgFast: "Mais rápido",
-      citys: null,
+      msgPrice: "Frete com o menor valor",
+      msgFast: "Frete mais rápido",
+      imageFastTransport: require("../assets/fast-time.svg"),
+      imageLowCostTransport: require("../assets/money-with-hand.svg"),
+      citysNames: null,
       weight: null,
       datas: null,
       city: "",
       lowPrice: null,
       fastDelivered: null,
+      fastDeliveredPrice: null,
       listCities: [],
       show: false,
       valueDelivery: null,
@@ -95,7 +108,7 @@ export default {
       let city = data.map((a) => a.city);
       let diffCity = new Set(city);
 
-      this.citys = Array.from(diffCity).sort();
+      this.citysNames = Array.from(diffCity).sort();
     },
 
     async getInfomation(e) {
@@ -107,7 +120,6 @@ export default {
       };
       this.selectedCity(dataUser);
     },
-
     selectedCity(dataUser) {
       this.listCities = this.datas.filter((a) => a.city == dataUser.city);
       this.analize();
@@ -152,10 +164,32 @@ export default {
           ? a
           : b;
       }, 0);
+      if (this.weight > 100) {
+        this.fastDeliveredPrice = new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(
+          parseFloat(
+            this.fastDelivered.cost_transport_heavy.replace(/[^0-9-.]/g, "") *
+              this.weight
+          )
+        );
+      } else {
+        this.fastDeliveredPrice = new Intl.NumberFormat("pt-BR", {
+          style: "currency",
+          currency: "BRL",
+        }).format(
+          (this.fastDeliveredPrice = parseFloat(
+            this.fastDelivered.cost_transport_ligth.replace(/[^0-9-.]/g, "") *
+              this.weight
+          ))
+        );
+      }
       return this.fastDelivered;
     },
     analize() {
       this.show = true;
+
     },
     clear() {
       this.show = false;
@@ -177,7 +211,7 @@ export default {
   display: flex;
   width: 100%;
   align-content: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   animation: go-back 1s ease alternate;
 }
 @keyframes go-back {
@@ -188,20 +222,28 @@ export default {
     transform: translateX(0);
   }
 }
-
-.container-component{
+.imagem-map-tranport{
+  margin: 10px;
+}
+.imagem-map-tranport {
+  font-size: 5px;
+}
+.container-component {
   display: flex;
+  max-width: 545px;
   flex-direction: column;
   align-items: center;
-  padding: 10px;
+  height: 100%;
+  align-self: center;
   flex: 1;
 }
-.containerForm {
+.container-form {
   display: flex;
   padding: 1.5%;
   margin: 3%;
   flex-direction: column;
-  width: 25%;
+  max-width: 400px;
+  width: 300px;
   justify-content: center;
   align-items: center;
   height: 60vh;
@@ -209,7 +251,8 @@ export default {
   border-radius: 8px;
 }
 .title {
-  font-size: 1.6rem;
+  font-size: 1.2rem;
+  text-align: center;
   margin-bottom: 10%;
 }
 .form {
@@ -230,10 +273,21 @@ export default {
   width: 60%;
   background-color: #00aca6;
 }
+.submit-req-btn-clear {
+  font-weight: bold;
+  width: 60%;
+  padding: 10px;
+  background-color: #00aca6;
+  font-size: small;
+}
 .input-form-container {
   display: flex;
   flex-direction: column;
 }
+.btn-clear {
+  margin: 5%;
+}
+
 label {
   font-size: small;
   font-weight: bold;
