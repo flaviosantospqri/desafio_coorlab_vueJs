@@ -6,15 +6,10 @@
       </b-navbar-brand>
     </b-navbar>
   </div>
-
 </template>
 
 <script>
-
-import {
-  BNavbar,
-  BNavbarBrand,
-} from 'bootstrap-vue'
+import { BNavbar, BNavbarBrand } from "bootstrap-vue";
 
 export default {
   components: {
@@ -22,21 +17,21 @@ export default {
     BNavbarBrand,
   },
   data() {
-    const appName = ''
+    const appName = "";
 
     return {
       appName,
-    }
+    };
   },
   created() {
-    this.appName = 'Melhor Frete'
+    this.appName = "Melhor Frete";
   },
   methods: {
     methodFoo() {
-      console.log(this.appName)
+      console.log(this.appName);
     },
   },
-}
+};
 </script>
 
 <style scoped>

@@ -189,7 +189,6 @@ export default {
     },
     analize() {
       this.show = true;
-
     },
     clear() {
       this.show = false;
@@ -222,7 +221,7 @@ export default {
     transform: translateX(0);
   }
 }
-.imagem-map-tranport{
+.imagem-map-tranport {
   margin: 10px;
 }
 .imagem-map-tranport {

@@ -2,7 +2,6 @@
   <div class="container-card">
     <h4>{{ message }}</h4>
     <div class="container-informations">
-      
       <section class="data-transport">
         <div class="figure">
           <img :src="image" alt="" srcset="" />
@@ -58,7 +57,7 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-.figure{
+.figure {
   padding: 20px;
   background-color: #00aca6;
   border-radius: 4px;
@@ -115,7 +114,7 @@ export default {
   font-weight: 600;
   cursor: pointer;
 }
-p{
+p {
   padding: 5px;
 }
 </style>
